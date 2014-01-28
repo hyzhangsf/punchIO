@@ -53,9 +53,11 @@ def punchIn():
         print("you are already punched in")
         sys.exit(0)
     conn, cur = opendb(db)
-    a=cur.execute("insert into activities (name, punchInTime, punchOutTime) values (?, datetime('now'), null);",(getUserName(),))
+    now = datetime.datetime.now()
+    a=cur.execute("insert into activities (name, punchInTime, punchOutTime) values (?, ?, null);",(getUserName(),now,))
     conn.commit()
     conn.close()
+    print("punched in at", now)
 
 def punchOut():
     if checkIsPunchedIn(db):
@@ -66,6 +68,7 @@ def punchOut():
         cur.execute("update activities set log=? where name is ? and punchOutTime is ?;", ( message, getUserName(),now ) )
         conn.commit()
         conn.close()
+        print("pucnhed out at", now)
     else:
         print("you are not punched in")
 
