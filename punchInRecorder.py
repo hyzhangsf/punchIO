@@ -7,20 +7,23 @@ Created on Jan 27, 2014
 '''
 import sys, sqlite3, os, time, datetime, getpass
 # db = r'/Users/zz/example.db'
-db = r'/usr/local/share/punch/example.db'
+db = r'/updatesr/local/share/punch/example.db'
 def printHelpMessage():
-        print("** argument error.")
-        print("** If you would like to punch in:")
-        print("     $ punch in")
-        print("** If you would like to punch out:")
-        print("     $ punch out")   
+        msg = '''
+Options:
+  -?,-h         : this help
+  all           : show all activities
+  in            : punch in
+  out           : punch out
+  '''  
+        print(msg)
 
 def checkArgument():
     numberOfArguments = len(sys.argv)
     if numberOfArguments != 2:
         printHelpMessage()
         sys.exit(1)
-    if sys.argv[1] in ["in","out","all","today","week"]:
+    if sys.argv[1] in ["in","out","all","today","week","-h","-?"]:
         return sys.argv[1]
     else:
         printHelpMessage()
@@ -95,15 +98,15 @@ def all():
         punchInTime, punchOutTime = convertTimeStringToDatetime(record[1]),convertTimeStringToDatetime(record[2])
         duration = punchOutTime - punchInTime
         seconds = duration.total_seconds()
-        hours = seconds // 3600
-        minutes = (seconds % 3600) // 60
+        hours, minutes = (seconds // 3600), (seconds % 3600) // 60        
         seconds = int(seconds % 60)
-
         print(record[0]," "*(15-len(record[0])),'|', punchInTime.strftime('%Y-%m-%d %H:%M:%S'),'|', punchOutTime.strftime('%Y-%m-%d %H:%M:%S'),'|','%02dh, %02d\' %02d\"' %(hours, minutes, seconds),'|',record[-2])
 
 
         
 option = checkArgument()
+if option in ['-h','-?']:
+    printHelpMessage()    
 if option ==  "in":
     punchIn()
 if option == "out":
