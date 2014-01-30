@@ -99,7 +99,7 @@ def all():
         minutes = (seconds % 3600) // 60
         seconds = int(seconds % 60)
 
-        print(record[0]," "*(15-len(record[0])),'|', punchInTime.strftime('%Y-%m-%d %H:%M:%S'),'|', punchOutTime.strftime('%Y-%m-%d %H:%M:%S'),'|','{} hours, {} minutes, {} seconds'.format(hours,minutes, seconds),'|',record[-2])
+        print(record[0]," "*(15-len(record[0])),'|', punchInTime.strftime('%Y-%m-%d %H:%M:%S'),'|', punchOutTime.strftime('%Y-%m-%d %H:%M:%S'),'|','%02dh, %02d\' %02d\"' %(hours, minutes, seconds),'|',record[-2])
 
 
         
