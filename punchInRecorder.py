@@ -6,8 +6,8 @@ Created on Jan 27, 2014
 @author: zz
 '''
 import sys, sqlite3, os, time, datetime, getpass
-#db = r'/Users/zz/example.db'
-db = r'/usr/local/share/punch/example.db'
+db = r'/Users/zz/example.db'
+# db = r'/usr/local/share/punch/example.db'
 def printHelpMessage():
         print("** argument error.")
         print("** If you would like to punch in:")
@@ -93,7 +93,7 @@ def all():
 
     for record in records:
         punchInTime, punchOutTime = convertTimeStringToDatetime(record[1]),convertTimeStringToDatetime(record[2])
-        print(record[0],'|', punchInTime.strftime('%Y-%m-%d %H:%M:%S'),'|', punchOutTime.strftime('%Y-%m-%d %H:%M:%S'),'|',record[-2])
+        print(record[0]," "*(20-len(record[0])),'|', punchInTime.strftime('%Y-%m-%d %H:%M:%S'),'|', punchOutTime.strftime('%Y-%m-%d %H:%M:%S'),'|',record[-2])
 
 
         
