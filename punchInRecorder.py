@@ -6,19 +6,23 @@ Created on Jan 27, 2014
 @author: zz
 '''
 import sys, sqlite3, os, time, datetime, getpass
-db = r'/users/zz/example.db'
-def checkArgument():
-    numberOfArguments = len(sys.argv)
-    if numberOfArguments != 2:
+db = r'/Users/zz/example.db'
+def printHelpMessage():
         print("** argument error.")
         print("** If you would like to punch in:")
         print("     $ punch in")
         print("** If you would like to punch out:")
-        print("     $ punch out")
-        sys.exit(1)
-    elif sys.argv[1] in ["in","out"]:
-        return sys.argv[1]
+        print("     $ punch out")   
 
+def checkArgument():
+    numberOfArguments = len(sys.argv)
+    if numberOfArguments != 2:
+        printHelpMessage()
+        sys.exit(1)
+    if sys.argv[1] in ["in","out","today","week"]:
+        return sys.argv[1]
+    else:
+        printHelpMessage()
 
 def checkIfDBFileExist(dbPath):
     return os.path.isfile(dbPath)
@@ -72,8 +76,22 @@ def punchOut():
     else:
         print("you are not punched in")
 
+def dailyReport():
+    if not databaseExists(db):
+        print("first time use, initializing database")
+    conn, cur = opendb(db)
+    assert(databaseExists(db))
+    userName = getUserName()
+        
+
 option = checkArgument()
 if option ==  "in":
     punchIn()
 if option == "out":
     punchOut()
+if option == "today":
+    # print daily summary
+    pass
+if option == "week":
+    # print weekly summary
+    pass
