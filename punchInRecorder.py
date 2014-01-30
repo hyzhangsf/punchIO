@@ -19,7 +19,7 @@ def checkArgument():
     if numberOfArguments != 2:
         printHelpMessage()
         sys.exit(1)
-    if sys.argv[1] in ["in","out","today","week"]:
+    if sys.argv[1] in ["in","out","all","today","week"]:
         return sys.argv[1]
     else:
         printHelpMessage()
@@ -75,23 +75,36 @@ def punchOut():
         print("pucnhed out at", now)
     else:
         print("you are not punched in")
+def convertTimeStringToDatetime(timeString):
+    #@param '2014-01-27 09:11:17.123'
+    #@return datetime.datetime(2014, 1, 27, 9, 11, 17, 123000)
+    return datetime.datetime.strptime(timeString, "%Y-%m-%d %H:%M:%S.%f")
 
-def dailyReport():
-    if not databaseExists(db):
+def all():
+    if not checkIfDBFileExist(db):
+        opendb(db)
         print("first time use, initializing database")
-    conn, cur = opendb(db)
-    assert(databaseExists(db))
+    assert(checkIfDBFileExist(db))
+    conn, cur = opendb(db)    
     userName = getUserName()
-        
+    # records=cur.execute("select * from activities where name is ?  and punchOutTime is not null;", (userName,)).fetchall()
+    records=cur.execute("select * from activities where punchOutTime is not null;").fetchall()
 
+    for record in records:
+        punchInTime, punchOutTime = convertTimeStringToDatetime(record[1]),convertTimeStringToDatetime(record[2])
+        print(userName,'|', punchInTime.strftime('%Y-%m-%d %H:%M:%S'),'|', punchOutTime.strftime('%Y-%m-%d %H:%M:%S'),'|',record[-2])
+
+
+        
 option = checkArgument()
 if option ==  "in":
     punchIn()
 if option == "out":
     punchOut()
-if option == "today":
+if option == "all":
     # print daily summary
-    pass
+    all()
+    # pass
 if option == "week":
     # print weekly summary
     pass
