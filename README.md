@@ -10,6 +10,9 @@ punchIO simple command line tool based on python3 created to record punch in/out
 * to push out
         
         $ punchInRecorder.py out
+* to print all report
+	
+		$ punchInRecorder.py all        
     
 Future To-Do
 =
