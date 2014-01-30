@@ -93,7 +93,7 @@ def all():
 
     for record in records:
         punchInTime, punchOutTime = convertTimeStringToDatetime(record[1]),convertTimeStringToDatetime(record[2])
-        print(userName,'|', punchInTime.strftime('%Y-%m-%d %H:%M:%S'),'|', punchOutTime.strftime('%Y-%m-%d %H:%M:%S'),'|',record[-2])
+        print(record[0],'|', punchInTime.strftime('%Y-%m-%d %H:%M:%S'),'|', punchOutTime.strftime('%Y-%m-%d %H:%M:%S'),'|',record[-2])
 
 
         
