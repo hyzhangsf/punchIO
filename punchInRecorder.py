@@ -6,7 +6,8 @@ Created on Jan 27, 2014
 @author: zz
 '''
 import sys, sqlite3, os, time, datetime, getpass
-db = r'/Users/zz/example.db'
+#db = r'/Users/zz/example.db'
+db = r'/usr/local/share/punch/example.db'
 def printHelpMessage():
         print("** argument error.")
         print("** If you would like to punch in:")
